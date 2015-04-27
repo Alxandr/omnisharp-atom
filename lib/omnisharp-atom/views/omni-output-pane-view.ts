@@ -3,11 +3,10 @@ var $ = spacePenViews.jQuery;
 var Convert = require('ansi-to-html')
 import Vue = require('vue')
 import _ = require('lodash')
-import OmniSharpServer = require('../../omni-sharp-server/omni-sharp-server')
 
 // Internal: A tool-panel view for the test result output.
 class OmniOutputPaneView extends spacePenViews.View {
-    private vm : {uninitialized: boolean; initialized: boolean; output: OmniSharp.VueArray<any> };
+    private vm: { uninitialized: boolean; initialized: boolean; output: OmniSharp.VueArray<any> };
     private convert: typeof Convert;
 
     public static content() {
@@ -55,11 +54,11 @@ class OmniOutputPaneView extends spacePenViews.View {
         });
         var viewModel = new Vue({
             el: this[0],
-            data: _.extend(OmniSharpServer.vm, {
+            data: {
                 uninitialized: true,
                 initialized: false,
                 output: []
-            })
+            }
         });
         this.vm = <any>viewModel;
         atom.emitter.on("omni-sharp-server:out", (data) => {
@@ -80,10 +79,10 @@ class OmniOutputPaneView extends spacePenViews.View {
                 logLevel: data.logLevel
             });
         });
-        return atom.emitter.on("omni-sharp-server:start", (pid) => {
+        atom.emitter.on("omni-sharp-server:start", (pid) => {
             this.vm.uninitialized = false;
             this.vm.initialized = true;
-            this.vm.output = <OmniSharp.VueArray<any>> [];
+            this.vm.output = <OmniSharp.VueArray<any>>[];
             return this.vm.output.push({
                 message: "Starting Omnisharp server (pid:" + pid + ")"
             });
