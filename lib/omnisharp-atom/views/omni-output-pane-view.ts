@@ -85,7 +85,8 @@ class OmniOutputPaneView extends spacePenViews.View {
             this.vm.initialized = true;
             this.vm.output = <OmniSharp.VueArray<any>>[];
             this.vm.output.push({
-                message: "Starting Omnisharp server (pid:" + pid + ")"
+                message: "Starting Omnisharp server (pid:" + pid + ")",
+                logLevel: "INFORMATION"
             });
         });
     }
